@@ -1,0 +1,14 @@
+# Dataset Configuration — PEMS-BAY (Traffic Speed)
+dataset:
+  name: "PEMS-BAY"
+  loader: "npz"
+  path: "data/pems_bay/pems_bay.npz"
+  data_key: "data"
+  feature_idx: 0                    # 0 = traffic speed (mph)
+  start_date: "2017-01-01"
+  frequency: "5min"
+  description: "San Francisco Bay Area — 325 sensors, Jan–May 2017"
+
+  adjacency:
+    enabled: true
+    path: "data/pems_bay/adj_mx_bay.pkl"

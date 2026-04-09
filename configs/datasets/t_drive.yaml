@@ -1,0 +1,12 @@
+# Dataset Configuration — T-Drive (Taxi Trajectory)
+dataset:
+  name: "T-Drive"
+  loader: "csv"
+  path: "data/t_drive/t_drive_aggregated.csv"
+  date_col: "timestamp"
+  target_col: "speed"               # Aggregated average speed per grid cell
+  frequency: "5min"
+  description: "Beijing taxi GPS trajectories — 10,357 taxis, Feb 2008"
+
+  adjacency:
+    enabled: false

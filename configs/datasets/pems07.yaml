@@ -1,0 +1,14 @@
+# Dataset Configuration — PeMS07 (Traffic Flow)
+dataset:
+  name: "PeMS07"
+  loader: "npz"
+  path: "data/pems07/pems07.npz"
+  data_key: "data"
+  feature_idx: 0
+  start_date: "2017-05-01"
+  frequency: "5min"
+  description: "California PeMS District 7 — 883 sensors, May–Aug 2017"
+
+  adjacency:
+    enabled: false
+    path: "data/pems07/adj_pems07.pkl"

@@ -1,0 +1,128 @@
+# =============================================================================
+# Enterprise Time Series Forecasting Benchmark — Master Configuration
+# Ministry of Transport and Infrastructure
+# =============================================================================
+
+experiment:
+  name: "ministry_traffic_benchmark_v1"
+  description: "Production benchmark for traffic forecasting models"
+  seed: 42
+
+# ---------------------------------------------------------------------------
+# Temporal Windowing (GLOBAL — enforced identically across ALL models)
+# ---------------------------------------------------------------------------
+windowing:
+  frequency: "5min"
+  seq_len: 96          # Input context window (96 × 5min = 8 hours)
+  pred_len: 24         # Forecast horizon   (24 × 5min = 2 hours)
+  stride: 1            # Sliding window stride
+
+# ---------------------------------------------------------------------------
+# Train / Validation / Test Split Ratios (chronological, NO shuffle)
+# ---------------------------------------------------------------------------
+splitting:
+  train_ratio: 0.7
+  val_ratio: 0.1
+  test_ratio: 0.2
+
+# ---------------------------------------------------------------------------
+# Feature Engineering
+# ---------------------------------------------------------------------------
+features:
+  temporal:
+    - "hour"
+    - "dayofweek"
+    - "is_weekend"
+  lags: [1, 24, 168]
+  rolling_windows: [24]
+  rolling_stats: ["mean", "std"]
+
+# ---------------------------------------------------------------------------
+# Hardware Constraints — NVIDIA RTX Ada 4500
+# ---------------------------------------------------------------------------
+hardware:
+  gpu_type: "RTX_Ada_4500"
+  max_vram_gb: 24
+  mixed_precision: true
+  precision_dtype: "bfloat16"        # "float16" or "bfloat16"
+  gradient_accumulation_steps: 4
+
+# ---------------------------------------------------------------------------
+# Training Defaults
+# ---------------------------------------------------------------------------
+training:
+  max_epochs: 100
+  batch_size: 64
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  early_stopping:
+    patience: 10
+    min_delta: 0.0001
+    monitor: "val_loss"
+    mode: "min"
+  oom_recovery:
+    enabled: true
+    max_retries: 3
+    batch_size_reduction_factor: 0.5
+
+# ---------------------------------------------------------------------------
+# Execution
+# ---------------------------------------------------------------------------
+execution:
+  mode: "sequential"           # "sequential" or "parallel"
+  fail_fast: false             # If false, skip failed models gracefully
+  cache_datasets: true         # Cache windowed tensors to disk
+  cache_dir: "outputs/cache"
+
+# ---------------------------------------------------------------------------
+# Logging
+# ---------------------------------------------------------------------------
+logging:
+  backend: "csv"               # "csv", "wandb", "mlflow"
+  log_dir: "outputs/logs"
+  checkpoint_dir: "outputs/checkpoints"
+  report_dir: "outputs/reports"
+  log_hardware_metrics: true
+
+# ---------------------------------------------------------------------------
+# Metrics to Compute
+# ---------------------------------------------------------------------------
+metrics:
+  - "MAE"
+  - "RMSE"
+  - "MAPE"
+  - "sMAPE"
+  - "R2"
+
+# ---------------------------------------------------------------------------
+# Model Zoo — Enable/Disable per category
+# ---------------------------------------------------------------------------
+models:
+  baselines:
+    SeasonalNaive: true
+    AutoARIMA: true
+  classical_ml:
+    LightGBM: true
+    XGBoost: true
+    CatBoost: true
+    ExtraTrees: true
+  dl_minimalist:
+    DLinear: true
+    TiDE: true
+  dl_complex:
+    TCN: true
+    TimeMixer: true
+    NHITS: true
+    PatchTST: true
+    Informer: true
+    TimesNet: true
+    iTransformer: true
+    Mamba: true
+  probabilistic:
+    DeepAR: true
+  foundation:
+    TimeGPT: false
+    Moirai: true
+    Chronos: true
+    TimesFM: true
+    LagLlama: true

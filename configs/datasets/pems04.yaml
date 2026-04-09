@@ -1,0 +1,14 @@
+# Dataset Configuration — PeMS04 (Traffic Flow)
+dataset:
+  name: "PeMS04"
+  loader: "npz"
+  path: "data/pems04/pems04.npz"
+  data_key: "data"
+  feature_idx: 0                    # 0 = traffic flow
+  start_date: "2018-01-01"
+  frequency: "5min"
+  description: "California PeMS District 4 — 307 sensors, Jan–Feb 2018"
+
+  adjacency:
+    enabled: false
+    path: "data/pems04/adj_pems04.pkl"

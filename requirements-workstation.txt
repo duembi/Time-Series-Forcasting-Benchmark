@@ -1,0 +1,52 @@
+# =============================================================================
+# TSF Benchmark — WORKSTATION Requirements (RTX Ada 4500, Python 3.11)
+# =============================================================================
+# KURULUM:
+#   conda create -n tsf python=3.11 -y
+#   conda activate tsf
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+#   pip install -r requirements-workstation.txt
+# =============================================================================
+
+# Core
+numpy>=1.24,<2.0
+pandas>=2.0
+polars>=0.20
+pyyaml>=6.0
+scipy>=1.11
+
+# Visualization & EDA
+matplotlib>=3.7
+seaborn>=0.13
+plotly>=5.18
+statsmodels>=0.14
+
+# Data formats
+tables>=3.8
+pyarrow>=14.0
+
+# ML / Tree-based (GPU destekli)
+scikit-learn>=1.3
+xgboost>=2.0
+lightgbm>=4.0
+catboost>=1.2
+
+# Deep Learning — NeuralForecast (Python 3.11 gerektirir)
+neuralforecast>=1.7.7
+statsforecast>=2.0
+pytorch-lightning>=2.1
+
+# Foundation Models
+chronos-forecasting>=1.0
+nixtla>=0.5              # TimeGPT API
+
+# Report generation
+markdown>=3.5
+weasyprint>=60.0
+jinja2>=3.1
+
+# Testing
+pytest>=7.0
+
+# Logging (optional)
+# wandb>=0.16

@@ -1,0 +1,15 @@
+# Dataset Configuration — PeMS08 (Traffic Flow)
+dataset:
+  name: "PeMS08"
+  loader: "npz"
+  path: "data/pems08/pems08.npz"
+  data_key: "data"
+  feature_idx: 0                    # 0 = traffic flow
+  start_date: "2016-07-01"
+  frequency: "5min"
+  description: "California PeMS District 8 traffic flow sensor data"
+
+  # Adjacency matrix (optional, for graph-based models)
+  adjacency:
+    enabled: false
+    path: "data/pems08/adj_pems08.pkl"
